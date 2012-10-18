@@ -27,7 +27,7 @@ void Cursor::init(string db, string user, string password)
 
 void Cursor::execute(string query, string &error)
 {
-
+	// let the query be another object.. which inherits string.	
 
 }
 
