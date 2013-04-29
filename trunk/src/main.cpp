@@ -44,20 +44,20 @@ void initialize_logger(YamlConfig config){
 	logger = new SLog(c);
 }
 
-void handle_sigsegv(int signo)
-{
-	 cout << "SIGSEGV pid = " << getpid() << endl;
-	 logger->debug("server going down, Segmenation fault encountered. PID:%d",getpid());
-}
-
-void handler(int signo)
-{
-	 if( signo == SIGCHLD ) {
-		 vector<pid_t> pidList = helper.waitpidNTimes();
-		 for(size_t i = 0; i < pidList.size(); i++)
-			 cout << "SIGCHLD handled pid " << pidList[i] << endl;
-	 }
-}
+//void handle_sigsegv(int signo)
+//{
+//	 cout << "SIGSEGV pid = " << getpid() << endl;
+//	 logger->debug("server going down, Segmenation fault encountered. PID:%d",getpid());
+//}
+//
+//void handler(int signo)
+//{
+//	 if( signo == SIGCHLD ) {
+//		 vector<pid_t> pidList = helper.waitpidNTimes();
+//		 for(size_t i = 0; i < pidList.size(); i++)
+//			 cout << "SIGCHLD handled pid " << pidList[i] << endl;
+//	 }
+//}
 
 int main(int argc, char *argv[])
 {
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 	vector<field> fields;
 	vector<condition> conditions;
 
-	ADD_TO_FIELDS("name", field::TYPE_STRING, 64, fields)
+	ADD_TO_FIELDS("name", field::TYPE_STRING, 64, fields) // setting the fields for variable binding
 	ADD_TO_FIELDS("id", field::TYPE_STRING, 64, fields)
 	ADD_TO_FIELDS("account_id", field::TYPE_STRING, 64, fields)
 
@@ -112,7 +112,6 @@ int main(int argc, char *argv[])
 	} else {
 		cout << "errorMessage: " << WatchObj->getErrorMessage() << endl;
 	}
-
 
 	delete WatchObj;
 	delete logger;
