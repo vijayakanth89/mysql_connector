@@ -1,2 +1,2 @@
 all:
-	g++ src/*.cpp -I ./include -lubac++ -o ./bin/a.out
+	g++ src/*.cpp -I ./include -o ./bin/a.out -lubac++
