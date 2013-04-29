@@ -1,0 +1,12 @@
+db:
+  host: localhost
+  user: root
+  password: admin
+  name: evermore_watch
+logging:
+  mode: 1
+  dir: /mnt/runtime/Broker/Evermore/watchlist/log
+  file_name: watchlist_server.log
+  namespace: watch 
+server:
+  port: 10000
