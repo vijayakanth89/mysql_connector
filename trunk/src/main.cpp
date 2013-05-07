@@ -97,21 +97,10 @@ int main(int argc, char *argv[])
 
 	string errorMessage;
 
-	if (WatchObj->getStatus()){
-		cout << "success.." << endl;
-		cout << "error: " << WatchObj->getErrorMessage() << endl;
-	} else {
-		cout << "errorMessage: " << WatchObj->getErrorMessage() << endl;
-	}
 
+	WatchObj->print_status();
 	WatchObj->select(fields,conditions);
-
-	if (WatchObj->getStatus()){
-		cout << "success.." << endl;
-		cout << "error: " << WatchObj->getErrorMessage() << endl;
-	} else {
-		cout << "errorMessage: " << WatchObj->getErrorMessage() << endl;
-	}
+	WatchObj->print_status();
 
 	delete WatchObj;
 	delete logger;

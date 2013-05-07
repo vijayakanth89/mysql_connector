@@ -21,12 +21,21 @@ Table::Table(string name, ConnectionDetails *database_config)
 	setTableName(name);
 	conn = new Connector(*database_config);
 }
-
 Table::~Table() {
 	if (conn != NULL)
 		delete conn;
 }
 
+void Table::print_status()
+{
+	if (this->getStatus()){
+		cout << "status: " << "true" << endl;
+		cout << "message: " << this->getErrorMessage() << endl;
+	} else {
+		cout << "status: " << "false" << endl;
+		cout << "message: " << this->getErrorMessage() << endl;
+	}
+}
 void Table::setTableName(string name)
 {
 	_name = name;
