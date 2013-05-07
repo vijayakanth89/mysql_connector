@@ -36,7 +36,7 @@ public:
 	void edit(Record &editValues);
 
 	void iterate(vector<field> &record);
-
+	void print_status();
 private:
 	string _name;
 	Connector *conn;
