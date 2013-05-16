@@ -13,7 +13,8 @@
 #include "Connector.h"
 #include "Query.h"
 #include "ConnectionDetails.h"
-
+#include "ConnectionPool.h"
+#include "Connection.h"
 using namespace std;
 
 namespace watchlist {
@@ -46,5 +47,6 @@ private:
 
 using namespace watchlist;
 extern ConnectionDetails *database_config;
+extern ConnectionPool *pool;
 
 #endif /* TABLE_H_ */

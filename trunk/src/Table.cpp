@@ -10,7 +10,11 @@
 
 Table::Table(string name) {
 	_name = name;
-	conn = new Connector(*database_config);
+	Connection *c = NULL;
+
+	pool->getConnection(c);
+
+	this->conn = static_cast<Connector*>(c);
 	database_config->print();
 
 	printf("conn_ptr: %p, table_name: %s \n", conn, _name.c_str());
@@ -22,8 +26,8 @@ Table::Table(string name, ConnectionDetails *database_config)
 	conn = new Connector(*database_config);
 }
 Table::~Table() {
-	if (conn != NULL)
-		delete conn;
+//	if (conn != NULL)
+//		delete conn;
 }
 
 void Table::print_status()

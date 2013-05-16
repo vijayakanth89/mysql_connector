@@ -8,8 +8,8 @@
 #include <ubac/IFHelper.h>
 
 #include "RequestParser.h"
-//#include "WatchlistMasterService.h"
 #include "ConnectionDetails.h"
+#include "ConnectionPool.h"
 #include <ubac/HTTPServer.h>
 #include "Table.h"
 #include "field.h"
@@ -26,6 +26,13 @@ IFHelper helper;
 Mutex conn_mutex;
 Mutex log_mutex;
 ConnectionDetails *database_config;
+ConnectionDetails *conn_config;
+ConnectionPool *pool ;
+void initConnectionPool()
+{
+	pool = new ConnectionPool();
+}
+
 
 void initialize_logger(YamlConfig config){
 	s_logger_config c;
@@ -67,6 +74,7 @@ int main(int argc, char *argv[])
 
 	YamlConfig *app_config = new YamlConfig(config_file);
 	database_config = new ConnectionDetails(*app_config);
+	conn_config = database_config;
 	yamlConfig = app_config;
 	s_pwd = helper.getPWD(argv[0], "./");
 	initialize_logger(*app_config);
@@ -75,12 +83,15 @@ int main(int argc, char *argv[])
 	cout << "compiled for mysql " << endl;
 #endif
 
+	initConnectionPool();
+
 	Table *WatchObj = new Table("watchlists");
 	
 	Record new_record;
 	new_record.addColumn("account_id", "001", field::TYPE_STRING, 64);
 	new_record.addColumn("name", "WATCH001", field::TYPE_STRING, 64);
 
+	WatchObj->print_status();
 	cout << "size: " << new_record.getLength() << endl;
 	WatchObj->addEntry(new_record);
 
@@ -95,9 +106,6 @@ int main(int argc, char *argv[])
 	ADD_TO_CONDITIONS("account_id",field::TYPE_STRING,"001",conditions)
 	ADD_TO_CONDITIONS("name",field::TYPE_STRING,"test_watch1234",conditions)
 
-	string errorMessage;
-
-
 	WatchObj->print_status();
 	WatchObj->select(fields,conditions);
 	WatchObj->print_status();
@@ -105,6 +113,6 @@ int main(int argc, char *argv[])
 	delete WatchObj;
 	delete logger;
 	delete app_config;
-
+	delete database_config;
 	return 0;
 }
